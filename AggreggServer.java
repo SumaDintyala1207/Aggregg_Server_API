@@ -38,3 +38,14 @@ public class AggreggServer {
         }
     }
 }
+
+class WeatherUpdateRequest {
+    private String location;
+    private WeatherData weatherData;
+}
+
+class WeatherData {
+    private String conditions;
+    private double temperature;
+    private long timestamp;
+}
