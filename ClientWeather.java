@@ -23,6 +23,7 @@ public class ClientWeather {
                 }
                 scanner.close();
             } else {
+
                 System.out.println("Error: " + responseCode);
             }
         }

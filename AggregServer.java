@@ -5,13 +5,13 @@ import java.util.*;
 import java.util.concurrent.*;
 
 @SpringBootApplication
-public class AggreggServer {
+public class AggregServer {
 
     private final ConcurrentHashMap<String, List<WeatherData>> weatherDataMap = new ConcurrentHashMap<>();
     private final int maxUpdates = 20;
 
     public static void main(String[] args) {
-        SpringApplication.run(AggreggServer.class, args);
+        SpringApplication.run(AggregServer.class, args);
     }
 
     @RestController
