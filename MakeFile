@@ -1,50 +1,49 @@
-##
-# source directory
-##
-SRC_DIR := idea
+# Makefile for Weather Aggregation System
 
-##
-# output directory
+# Variables
+MVN = mvn
+TARGET_JAR = target/weather-aggregation-1.0-SNAPSHOT.jar
+MAIN_CLASS = com.example.weather.WeatherApplication
+PORT = 8080
 
-##
-OUT_DIR := out
+# Default target: Compile the project
+all: compile
 
-##
-# sources
-##
-SOURCES := $(wildcard $(SRC_DIR)/*.java)
+# Compile the project
+compile:
+	$(MVN) compile
 
-##
-# classes
-##
-CLASSES := $(SOURCES:$(SRC_DIR)/%.java=$(OUT_DIR)/%.class)
+# Run unit tests
+test:
+	$(MVN) test
 
-##
-# compiler and compiler flags
-##
-JC := javac
-JCFLAGS := -d $(OUT_DIR)/ -cp $(SRC_DIR)/
+# Package the project into a JAR file
+package: compile
+	$(MVN) package
 
-##
-# suffixes
-##
-.SUFFIXES: .java
+# Run the application using the Spring Boot JAR
+run: package
+	java -jar $(TARGET_JAR)
 
-##
-# targets that do not produce output files
-##
-.PHONY: all clean
-
-##
-# default target(s)
-##
-all: $(CLASSES)
-
-$(CLASSES): $(OUT_DIR)/%.class: $(SRC_DIR)/%.java
-	$(JC) $(JCFLAGS) $<
-
-##
-# clean up any output files
-##
+# Clean the project (remove compiled files and target folder)
 clean:
-	rm $(OUT_DIR)/*.class
+	$(MVN) clean
+
+# Stop the application (Linux/MacOS)
+stop:
+	lsof -t -i:$(PORT) | xargs kill -9 || echo "Server not running on port $(PORT)"
+
+# Docker: Build Docker image
+docker-build:
+	docker build -t weather-aggregation-system .
+
+# Docker: Run Docker container
+docker-run:
+	docker run -d -p $(PORT):$(PORT) weather-aggregation-system
+
+# Run the application in the background (Linux/MacOS)
+start-background: package
+	nohup java -jar $(TARGET_JAR) &
+
+# Rebuild and run the project
+rebuild: clean compile run
