@@ -2,7 +2,7 @@
 
 # Variables
 MVN = mvn
-TARGET_JAR = target/weather-aggregation-1.0-SNAPSHOT.jar
+TARGET_JAR = target/ASSIGNMENT-2-1.0-SNAPSHOT.jar
 MAIN_CLASS = com.example.weather.WeatherApplication
 PORT = 8080
 
